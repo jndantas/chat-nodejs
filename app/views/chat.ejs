@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+
+		<title>Multiroom Chat</title>
+		
+		<!-- JQUERY -->
+		<script src="js/jquery-2.2.1.js"></script>
+		
+		<!-- bootstrap - link cdn -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	
+		<!-- estilo -->
+		<link href="css/style.css" rel="stylesheet">
+		
+		<script type="text/javascript">
+		
+			$(document).ready(function(){
+				$("#exibe_chat").click(function(){
+					$("#conversa").show();
+					$("#participantes").hide();
+					ocultaNavbar();
+				});
+				
+				$("#exibe_participantes").click(function(){
+					$("#participantes").show();
+					$("#conversa").hide();
+					ocultaNavbar();
+				});
+			});
+			
+			function ocultaNavbar(){
+				$("#btn_navbar_toggle").attr("class","navbar-toggle collapsed");
+				$("#navbar-collapse-1").attr("class","navbar-collapse collapse");
+				$("#btn_navbar_toggle").attr("aria-expanded","false");
+				$("#navbar-collapse-1").attr("aria-expanded","false");
+			}
+		</script>
+	</head>
+
+	<body>
+	
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+			  <a class="navbar-brand" href="#">Multiroom Chat</a>
+			  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav">
+				  <a class="nav-link active" aria-current="page" href="#">Home</a>
+				  <a class="nav-link" id="exibe_chat">Chat</a>
+				  <a class="nav-link"  id="exibe_participantes">Participantes</a>
+				</div>
+			  </div>
+			</div>
+		  </nav>
+	
+		<div class="container">
+            <div class="row conversa" id="conversa">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<div class="dialogo">
+						<h4>Jorge</h4>
+						<p>Fala José, blz cara?</p>
+					</div>
+					
+					<div class="dialogo">
+						<h4>José</h4>
+						<p>Opa, tudo certo!</p>
+					</div>
+					
+					<div class="dialogo">
+						<h4>Jorge</h4>
+						<p>Vai estudar mais sobre NodeJS hoje?</p>
+					</div>
+					
+					<div class="dialogo">
+						<h4>José</h4>
+						<p>Sim, com certeza. Vamos trabalhar com Websockets hoje, o assunto é bem interessante</p>
+					</div>
+					
+					<div class="dialogo">
+						<h4>Jorge</h4>
+						<p>Show de bola, comunicação bi-direcional em páginas ou sistemas web é muito bacana mesmo</p>
+					</div>
+				</div>
+				<div class="col-md-1"></div>
+                
+            </div>
+			
+			<div class="row participantes" id="participantes" style="display:none">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<span class="participante">
+						<img src="images/ico_usuario.png" />
+						Jorge
+					</span>
+					
+					<span class="participante">
+						<img src="images/ico_usuario.png" />
+						José
+					</span>
+					
+					<span class="participante">
+						<img src="images/ico_usuario.png" />
+						Fernando
+					</span>
+				</div>
+				<div class="col-md-1"></div>
+                
+            </div>
+        </div>
+		
+		<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+			<div class="container">
+				<div class="panel-body campo-mensagem">
+					<form>
+						<div class="col-md-12">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Mensagem">
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button">></button>
+								</span>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</nav>		
+		
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+		
+	</body>
+</html>

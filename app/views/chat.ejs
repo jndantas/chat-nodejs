@@ -60,77 +60,72 @@
 		<div class="container">
             <div class="row conversa" id="conversa">
 				<div class="col-md-1"></div>
-				<div class="col-md-10">
-					<div class="dialogo">
-						<h4>Jorge</h4>
-						<p>Fala José, blz cara?</p>
-					</div>
-					
-					<div class="dialogo">
-						<h4>José</h4>
-						<p>Opa, tudo certo!</p>
-					</div>
-					
-					<div class="dialogo">
-						<h4>Jorge</h4>
-						<p>Vai estudar mais sobre NodeJS hoje?</p>
-					</div>
-					
-					<div class="dialogo">
-						<h4>José</h4>
-						<p>Sim, com certeza. Vamos trabalhar com Websockets hoje, o assunto é bem interessante</p>
-					</div>
-					
-					<div class="dialogo">
-						<h4>Jorge</h4>
-						<p>Show de bola, comunicação bi-direcional em páginas ou sistemas web é muito bacana mesmo</p>
-					</div>
-				</div>
+				<div class="col-md-10" id="dialogos"></div>					
 				<div class="col-md-1"></div>
                 
             </div>
 			
 			<div class="row participantes" id="participantes" style="display:none">
 				<div class="col-md-1"></div>
-				<div class="col-md-10">
-					<span class="participante">
-						<img src="images/ico_usuario.png" />
-						Jorge
-					</span>
-					
-					<span class="participante">
-						<img src="images/ico_usuario.png" />
-						José
-					</span>
-					
-					<span class="participante">
-						<img src="images/ico_usuario.png" />
-						Fernando
-					</span>
-				</div>
+				<div class="col-md-10" id="users"></div>
 				<div class="col-md-1"></div>
-                
             </div>
         </div>
 		
-		<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+		<nav class="navbar fixed-bottom navbar-light bg-light">			
 			<div class="container">
-				<div class="panel-body campo-mensagem">
-					<form>
-						<div class="col-md-12">
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Mensagem">
-								<span class="input-group-btn">
-									<button class="btn btn-default" type="button">></button>
-								</span>
-							</div>
+				<div class="card-body campo-mensagem">
+					<div class="col-md-12">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Mensagem" id="mensagem">
+							<input type="hidden" value="0" id="nickUpdated" >
+							<button class="btn btn-secondary" type="button" id="sendMessage">></button>
 						</div>
-					</form>
+					</div>
 				</div>
 			</div>
 		</nav>		
 		
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-		
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			let socket = io('http://localhost');
+
+			$('#sendMessage').click(()=>{
+				socket.emit(
+					'sendMsgServer',
+					{
+						nick:'<%=dataUser.apelido%>',
+						message: $('#mensagem').val(),
+						nickUpdated: $('#nickUpdated').val()
+					}
+				);
+				$('#nickUpdated').val(1)
+				$('#mensagem').val('')
+			})
+
+
+			socket.on('msgCliente', function(data) {
+				let nick  = data.nick;
+				let message = data.message;
+				let html = '';
+				html += '<div class="dialogo">';
+				html += '<h4>' + nick + '</h4>';
+				html += '<p>' + message + '</p>';
+				html += '</div">';
+				$('#dialogos').append(html);
+				window.scrollTo(0, document.body.scrollHeight)
+			})
+
+			socket.on('usersChat', function(data) {
+				let nick  = data.nick;
+				let html = '';
+				html += '<span class="participante">';
+				html += '<img src="images/ico_usuario.png">';
+				html += nick;
+				html += '</span">';
+				$('#users').append(html);
+			})
+		</script>
 	</body>
 </html>
